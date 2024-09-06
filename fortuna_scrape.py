@@ -26,7 +26,7 @@ for league in leagues:
                 item['home'] = kursy[0].text.strip()
                 item['draw'] = kursy[1].text.strip()
                 item['away'] = kursy[2].text.strip()
-            data.append(item)
+            data.append((kurs(gospodarz=pierwszy, gosc=drugi, kurs1=k1, kursX=kX,kurs2=k2, data_meczu=full_datetime))
 
 
 print(data)
