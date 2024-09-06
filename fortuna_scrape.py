@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-from Data_class import kurs, print_dom_variables
+from Data_class import odds, print_dom_variables
 
 data = []
 
@@ -26,9 +26,12 @@ for league in leagues:
                 item['home'] = kursy[0].text.strip()
                 item['draw'] = kursy[1].text.strip()
                 item['away'] = kursy[2].text.strip()
-            data.append((kurs(gospodarz=pierwszy, gosc=drugi, kurs1=k1, kursX=kX,kurs2=k2, data_meczu=full_datetime))
+            data.append((odds(game= item['game'], home= item['home'], draw=item['draw'],away=item['away'], date=None)))
+            date = row.find("span",class_="event_datetime")
+            print(date)
 
 
-print(data)
-df = pd.DataFrame(data)
-df.to_excel('games.xlsx')
+#for v in data:
+ #   print_dom_variables(v)
+#df = pd.DataFrame(data)
+#df.to_excel('games.xlsx')

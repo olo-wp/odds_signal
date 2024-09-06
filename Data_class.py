@@ -3,19 +3,17 @@ from dataclasses import dataclass, asdict
 
 
 @dataclass
-class kurs:
-    pierwszy: str = None
-    drugi: str = None
-    kurs1: float = None
-    kursX: float = None
-    kurs2: float = None
-    data_meczu: datetime.datetime = None
+class odds:
+    game: str = None
+    home: float = None
+    draw: float = None
+    away: float = None
+    date: datetime.datetime = None
 
-def print_dom_variables(kurs_obj):
-    print("gospodarz:", kurs_obj.pierwszy)
-    print("gosc:", kurs_obj.drugi)
-    print("1:", kurs_obj.kurs1)
-    print("X:", kurs_obj.kursX)
-    print("2:", kurs_obj.kurs2)
-    print("data:", kurs_obj.data_meczu)
+def print_dom_variables(odds_obj):
+    print("game:", odds_obj.game)
+    print("1:", odds_obj.home)
+    print("X:", odds_obj.draw)
+    print("2:", odds_obj.away)
+    print("date:", odds_obj.date)
 
