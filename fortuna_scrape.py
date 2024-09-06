@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-from dataclasses import dataclass, asdict
+from Data_class import kurs, print_dom_variables
 
 data = []
 
