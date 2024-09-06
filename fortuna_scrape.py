@@ -32,3 +32,21 @@ for league in leagues:
 print(data)
 df = pd.DataFrame(data)
 df.to_excel('games.xlsx')
+
+'''
+dlugi 
+komentarz
+tego typu
+'''
+
+
+# Wyciągnięcie tekstu z elementu 'span'
+datetime_text = datetime_element.text.strip()
+# Podział tekstu na datę i godzinę
+date_part, time_part = datetime_text.split()
+# Uzyskanie bieżącego roku
+current_year = datetime.now().year
+# Skonstruowanie pełnej daty z bieżącym rokiem
+full_datetime_str = f"{date_part}.{current_year} {time_part}"
+# Parsowanie do obiektu datetime, aby upewnić się, że format jest prawidłowy
+full_datetime = datetime.strptime(full_datetime_str, "%d.%m.%Y %H:%M")
