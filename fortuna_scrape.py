@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
 import pandas as pd
 from Data_class import odds, print_dom_variables
 
@@ -26,13 +27,14 @@ for league in leagues:
                 item['home'] = kursy[0].text.strip()
                 item['draw'] = kursy[1].text.strip()
                 item['away'] = kursy[2].text.strip()
-            data.append((odds(game= item['game'], home= item['home'], draw=item['draw'],away=item['away'], date=None)))
-            date = row.find("span",class_="event_datetime")
-            print(date)
+            datetime_text = row.find("span",class_="event-datetime").text.strip()
+            date_part, time_part = datetime_text.split()
+            current_year = datetime.now().year
+            full_datetime_str = f"{date_part}.{current_year} {time_part}"
+            full_datetime = datetime.strptime(full_datetime_str, "%d.%m.%Y %H:%M")
 
-
-#for v in data:
- #   print_dom_variables(v)
+for v in data:
+    print_dom_variables(v)
 #df = pd.DataFrame(data)
 #df.to_excel('games.xlsx')
 
@@ -44,12 +46,12 @@ tego typu
 
 
 # Wyciągnięcie tekstu z elementu 'span'
-datetime_text = datetime_element.text.strip()
+#datetime_text = datetime_element.text.strip()
 # Podział tekstu na datę i godzinę
-date_part, time_part = datetime_text.split()
+#date_part, time_part = datetime_text.split()
 # Uzyskanie bieżącego roku
-current_year = datetime.now().year
+#current_year = datetime.now().year
 # Skonstruowanie pełnej daty z bieżącym rokiem
-full_datetime_str = f"{date_part}.{current_year} {time_part}"
+#full_datetime_str = f"{date_part}.{current_year} {time_part}"
 # Parsowanie do obiektu datetime, aby upewnić się, że format jest prawidłowy
-full_datetime = datetime.strptime(full_datetime_str, "%d.%m.%Y %H:%M")
+#full_datetime = datetime.strptime(full_datetime_str, "%d.%m.%Y %H:%M")
