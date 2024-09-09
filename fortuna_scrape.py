@@ -7,12 +7,12 @@ from Data_class import odds, print_dom_variables
 from config import fortuna_leagues
 import config
 
-leagues = config.leagues
+fortuna_league = config.fortuna_leagues
 
 def fortuna_scaping():
     data = []
 
-    for league in fortuna_leagues:
+    for league in fortuna_league:
         #time.sleep(1)
         url = "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/{league}".format(league=league)
         response = requests.get(url)
