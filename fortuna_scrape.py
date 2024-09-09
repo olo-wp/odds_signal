@@ -1,18 +1,13 @@
 import requests
-import time
 from bs4 import BeautifulSoup
 from datetime import datetime
 import pandas as pd
-from Data_class import odds, print_dom_variables
-from config import fortuna_leagues
-import config
-
-fortuna_league = config.fortuna_leagues
-
-def fortuna_scaping():
+from airflow_architecture.Data_class import odds, print_dom_variables
+from airflow_architecture.config import fortuna_leagues
+def fortuna_scraping():
     data = []
 
-    for league in fortuna_league:
+    for league in fortuna_leagues:
         #time.sleep(1)
         url = "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/{league}".format(league=league)
         response = requests.get(url)

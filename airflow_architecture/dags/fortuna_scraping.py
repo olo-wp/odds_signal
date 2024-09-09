@@ -2,7 +2,7 @@ from datetime import timedelta, datetime
 
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from fortuna_scrape import fortuna_scaping
+from odds_signal.fortuna_scrape import fortuna_scraping
 
 default_args = {
     'owner': '<olo>',
@@ -18,6 +18,6 @@ with DAG(
 ) as dag:
     task1 = PythonOperator(
         task_id='scraper',
-        python_callable=fortuna_scaping,
+        python_callable=fortuna_scraping,
     )
-    task1
+    #task1
