@@ -7,7 +7,7 @@ from Data_class import odds, print_dom_variables
 from config import fortuna_leagues
 import config
 
-leagues = config.leagues
+fortuna_leagues = config.fortuna_leagues
 
 def fortuna_scaping():
     data = []
