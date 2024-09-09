@@ -2,8 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 import pandas as pd
-from airflow_architecture.Data_class import odds, print_dom_variables
-from airflow_architecture.config import fortuna_leagues
+from Data_class import odds, print_dom_variables
+from config import fortuna_leagues
+
+
 def fortuna_scraping():
     data = []
 
