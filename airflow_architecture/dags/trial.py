@@ -13,7 +13,7 @@ default_args = {
 }
 with DAG(
         default_args=default_args,
-        dag_id='fortuna_scraping',
+        dag_id='trial',
         description='-',
         schedule_interval='@daily',
         start_date= days_ago(0) #datetime(2024, 9, 7),
