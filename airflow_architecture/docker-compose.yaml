@@ -99,6 +99,12 @@ services:
 
   airflow-webserver:
     <<: *airflow-common
+    environment:
+      <<: *airflow-common-env
+      PYTHONPATH: /opt/airflow/odds_signal:/opt/airflow/dags
+    volumes:
+      - ./odds_signal:/opt/airflow/odds_signal
+      - ./dags:/opt/airflow/dags
     command: webserver
     ports:
       - "8080:8080"
@@ -116,6 +122,12 @@ services:
 
   airflow-scheduler:
     <<: *airflow-common
+    environment:
+      <<: *airflow-common-env
+      PYTHONPATH: /opt/airflow/odds_signal:/opt/airflow/dags
+    volumes:
+      - ./odds_signal:/opt/airflow/odds_signal
+      - ./dags:/opt/airflow/dags
     command: scheduler
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
@@ -226,3 +238,4 @@ services:
   # See: https://docs.docker.com/compose/profiles/
 volumes:
   postgres-db-volume:
+
