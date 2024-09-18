@@ -5,7 +5,6 @@ import pandas as pd
 from Data_class import odds, print_dom_variables
 from config import fortuna_leagues
 
-
 def fortuna_scraping():
     data = []
 
@@ -35,8 +34,11 @@ def fortuna_scraping():
                 full_datetime = datetime.strptime(full_datetime_str, "%d.%m..%Y %H:%M")
                 data.append(odds(game=item['game'], home=item['home'], draw=item['draw'], away=item['away'],
                                  date=full_datetime))
-    for v in data:
-        print_dom_variables(v)
+    #for v in data:
+    #    print_dom_variables(v)
     df = pd.DataFrame(data)
-    print(df.size)
+    df['home'] = df['home'].astype(float)
+    df['draw'] = df['draw'].astype(float)
+    df['away'] = df['away'].astype(float)
+    return df
 #df.to_excel('games.xlsx')
