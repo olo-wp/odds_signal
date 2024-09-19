@@ -1,10 +1,16 @@
+import json
+
 import requests
+import unidecode
 from bs4 import BeautifulSoup
 from datetime import datetime
 import pandas as pd
 from Data_class import odds, print_dom_variables
 from config import fortuna_leagues
 
+
+def remove_accents(a):
+    return unidecode.unidecode(a.decode('utf-8'))
 def fortuna_scraping():
     data = []
 
@@ -40,5 +46,7 @@ def fortuna_scraping():
     df['home'] = df['home'].astype(float)
     df['draw'] = df['draw'].astype(float)
     df['away'] = df['away'].astype(float)
+    df['game'] = df['game'].str.normalize('NFKD').str.encode('ascii',errors='ignore').str.decode('utf-8')
+    df_json = df.to_json()
     return df
 #df.to_excel('games.xlsx')
