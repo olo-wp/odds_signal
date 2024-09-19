@@ -104,3 +104,6 @@ services:
       retries: 5
 networks:
   confluent:
+
+
+#source: https://github.com/airscholar/e2e-data-engineering/blob/main/docker-compose.yml
