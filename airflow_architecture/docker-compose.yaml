@@ -102,8 +102,26 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+      #source: https://github.com/airscholar/e2e-data-engineering/blob/main/docker-compose.yml
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "airflow" ]
+      interval: 10s
+      retries: 5
+      start_period:
+    restart: always
+
 networks:
   confluent:
 
 
-#source: https://github.com/airscholar/e2e-data-engineering/blob/main/docker-compose.yml
+
