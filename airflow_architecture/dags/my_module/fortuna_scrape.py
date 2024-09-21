@@ -7,9 +7,6 @@ import pandas as pd
 from Data_class import odds
 from config import fortuna_leagues
 
-
-def remove_accents(a):
-    return unidecode.unidecode(a.decode('utf-8'))
 def fortuna_scraping():
     data = []
 

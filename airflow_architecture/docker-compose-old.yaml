@@ -96,7 +96,6 @@ services:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 10s
       retries: 5
-      start_period: 5s
     restart: always
 
   airflow-webserver:
