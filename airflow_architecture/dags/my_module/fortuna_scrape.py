@@ -1,6 +1,5 @@
 
 import requests
-import unidecode
 from bs4 import BeautifulSoup
 from datetime import datetime
 import pandas as pd
