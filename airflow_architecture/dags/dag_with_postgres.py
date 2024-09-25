@@ -84,8 +84,6 @@ with DAG(
         catchup=False,
         start_date=days_ago(0),
 ) as dag:
-
-
     create_table_games_id = SQLExecuteQueryOperator(
         task_id='create_table_games_id',
         conn_id=postgres_conn_id,
