@@ -15,7 +15,7 @@ default_args = {
 }
 with DAG(
         default_args=default_args,
-        dag_id='fortuna_scraping_test_4',
+        dag_id='fortuna_scraping_test_5',
         description='-',
         schedule_interval='@daily',
         start_date=days_ago(0)

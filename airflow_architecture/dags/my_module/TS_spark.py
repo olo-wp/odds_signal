@@ -22,9 +22,7 @@ if __name__ == "__main__":
 
     df_json = raw_data.selectExpr("CAST(value AS BINARY) as binary_value") \
         .select(decode(col("binary_value"), "UTF-8").alias("json_string"))
-    '''
 
-    # Zdefiniuj schemat dla danych JSON z użyciem FloatType dla kolumn numerycznych
     schema = StructType([
         StructField("game", StringType(), True),
         StructField("home", FloatType(), True),
@@ -33,15 +31,13 @@ if __name__ == "__main__":
         StructField("game_date", TimestampType(), True)
     ])
 
-    # Parsowanie danych JSON na kolumny z już odpowiednim typem FloatType
     df_parsed = df_json.withColumn("data", from_json(col("json_string"), schema)) \
         .select("data.*")
 
-    # Pokaż schemat danych
     df_parsed.printSchema()
     print(df_parsed.isStreaming)
-    '''
-    df_json \
+
+    df_parsed \
         .writeStream \
         .outputMode("update") \
         .format("console") \
