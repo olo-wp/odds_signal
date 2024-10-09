@@ -8,10 +8,6 @@ from airflow.operators.python import PythonOperator
 sys.path.append('/opt/airflow/dags/my_module')
 from my_module import test
 
-def hi():
-    print('hi')
-
-
 default_args = {
     'owner': '<olo>',
     'retries': 5,
@@ -19,7 +15,7 @@ default_args = {
 }
 with DAG(
         default_args=default_args,
-        dag_id='fortuna_scraping_test_2',
+        dag_id='fortuna_scraping_test_4',
         description='-',
         schedule_interval='@daily',
         start_date=days_ago(0)

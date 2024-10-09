@@ -43,4 +43,5 @@ def fortuna_scraping():
     df['away'] = df['away'].astype(float)
     df['game'] = df['game'].str.normalize('NFKD').str.encode('ascii',errors='ignore').str.decode('utf-8')
     return df
+
 #df.to_excel('games.xlsx')
