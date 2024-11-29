@@ -33,6 +33,7 @@ def fortuna_scraping():
                 current_year = datetime.now().year
                 full_datetime_str = f"{date_part}.{current_year} {time_part}"
                 full_datetime = datetime.strptime(full_datetime_str, "%d.%m..%Y %H:%M")
+                full_datetime = full_datetime.timestamp()
                 data.append(odds(game=item['game'], home=item['home'], draw=item['draw'], away=item['away'],
                                  date=full_datetime))
     #for v in data:

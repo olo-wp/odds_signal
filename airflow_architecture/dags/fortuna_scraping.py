@@ -15,9 +15,9 @@ default_args = {
 }
 with DAG(
         default_args=default_args,
-        dag_id='fortuna_scraping_test_5',
+        dag_id='fortuna_scraping_test_6',
         description='-',
-        schedule_interval='@daily',
+        schedule_interval=timedelta(minutes=3),
         start_date=days_ago(0)
 ) as dag:
     task1 = PythonOperator(

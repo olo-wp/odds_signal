@@ -5,7 +5,7 @@ import pandas as pd
 def serialize_record(record):
     for key, value in record.items():
         if isinstance(value, pd.Timestamp):
-            record[key] = value.timestamp()
+            record[key] = value.isoformat()
     return record
 def stream_data(df):
     producer = KafkaProducer(bootstrap_servers='broker:29092',

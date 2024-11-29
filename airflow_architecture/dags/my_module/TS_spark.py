@@ -1,7 +1,7 @@
 #def send_to_spark():
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import from_json, col, decode
-from pyspark.sql.types import StructType, StructField, StringType, TimestampType, FloatType
+from pyspark.sql.functions import from_json, col, decode, from_unixtime
+from pyspark.sql.types import StructType, StructField, StringType, TimestampType, FloatType, DoubleType
 import json
 
 if __name__ == "__main__":
@@ -20,19 +20,33 @@ if __name__ == "__main__":
     .option('startingOffsets', 'earliest') \
     .load()
 
-    df_json = raw_data.selectExpr("CAST(value AS BINARY) as binary_value") \
-        .select(decode(col("binary_value"), "UTF-8").alias("json_string"))
+    df_json = raw_data.selectExpr(
+        "CAST(value AS BINARY) as binary_value",
+        "timestamp"
+    ).select(
+        decode(col("binary_value"), "UTF-8").alias("json_string"),
+        col("timestamp").alias("message_timestamp")
+    )
 
-    schema = StructType([
+    schema = (StructType([
         StructField("game", StringType(), True),
-        StructField("home", FloatType(), True),
-        StructField("draw", FloatType(), True),
-        StructField("away", FloatType(), True),
-        StructField("game_date", TimestampType(), True)
-    ])
+        StructField("home", DoubleType(), True),
+        StructField("draw", DoubleType(), True),
+        StructField("away", DoubleType(), True),
+        StructField("date", DoubleType(), True),
+    ]))
 
-    df_parsed = df_json.withColumn("data", from_json(col("json_string"), schema)) \
-        .select("data.*")
+    df_parsed = df_json.select(
+        from_json(col("json_string"), schema).alias("data"),
+        col("message_timestamp")
+    ).select("data.*", "message_timestamp")
+
+    df_parsed = df_parsed.withColumn(
+        "game_date",
+        from_unixtime(col("date")).cast("timestamp")
+    )
+    df_parsed = df_parsed.drop("date")
+
 
     df_parsed.printSchema()
     print(df_parsed.isStreaming)
