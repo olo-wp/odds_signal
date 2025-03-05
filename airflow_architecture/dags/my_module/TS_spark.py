@@ -2,6 +2,8 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, col, decode, from_unixtime
 from pyspark.sql.types import StructType, StructField, StringType, TimestampType, FloatType, DoubleType
+from pyspark.sql.functions import window, avg, col, round
+
 import json
 
 if __name__ == "__main__":
@@ -14,11 +16,11 @@ if __name__ == "__main__":
     s_conn.sparkContext.setLogLevel("ERROR")
 
     raw_data = s_conn.readStream \
-    .format('kafka') \
-    .option('kafka.bootstrap.servers', 'localhost:9092') \
-    .option('subscribe', 'airflow-data-stream') \
-    .option('startingOffsets', 'earliest') \
-    .load()
+        .format('kafka') \
+        .option('kafka.bootstrap.servers', 'localhost:9092') \
+        .option('subscribe', 'airflow-data-stream') \
+        .option('startingOffsets', 'earliest') \
+        .load()
 
     df_json = raw_data.selectExpr(
         "CAST(value AS BINARY) as binary_value",
@@ -47,10 +49,10 @@ if __name__ == "__main__":
     )
     df_parsed = df_parsed.drop("date")
 
-
     df_parsed.printSchema()
     print(df_parsed.isStreaming)
 
+    """
     df_parsed \
         .writeStream \
         .outputMode("update") \
@@ -58,5 +60,20 @@ if __name__ == "__main__":
         .option("truncate", "false") \
         .start() \
         .awaitTermination()
+    """
 
+    df_avg = df_parsed.groupBy(
+        col("game"),
+        window(col("message_timestamp"), "10 minutes")
+    ) \
+        .agg(
+             round(avg("home"),2).alias("avg_home"),
+             round(avg("draw"),2).alias("avg_draw"),
+             round(avg("away"),2).alias("avg_away")
+    )
 
+    df_avg.writeStream \
+        .outputMode("update") \
+        .format("console") \
+        .start() \
+        .awaitTermination()
